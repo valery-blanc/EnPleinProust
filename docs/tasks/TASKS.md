@@ -82,15 +82,25 @@
 - [x] Mettre à jour `enpleinproust-spec.md`
 - [x] Commit + push
 
-### Backlog
-- [ ] Upload du portrait définitif (le placeholder a été remplacé par Val)
+### FEAT-006 — Hook suppression inscription → CSV
+- [x] Hook `page.delete:after` dans le plugin
+- [x] Matching email + prénom + nom + date → statut "Supprimée" dans le CSV
+- [x] Testé et validé par Val
+
+## Done
+
+### FEAT-003 — Implémentation complète initiale (validé)
+### FEAT-004 — Itérations design (validé)
+### FEAT-005 — Inscription email + CSV backup (validé)
+### BUG-001 — Bouton bloqué + redirect confirmation (validé)
+### FEAT-006 — Hook suppression CSV (validé)
+
+## Backlog
 - [ ] Saisie des dates précises et titre de l'édition Tome 1 (2019)
-- [ ] Mise en place des créneaux structurés sur `/inscription` quand l'agenda
-      2027 sera fixé
+- [ ] Créneaux structurés sur `/inscription` quand l'agenda 2027 est fixé
 - [ ] Page mentions légales + RGPD
-- [ ] Configuration SMTP pour l'envoi d'emails de notification d'inscription
-- [ ] Cron de backup `kirby/content/` sur Avignon
+- [ ] Cron backup `kirby/content/` sur Avignon (les médias et contenu textuel)
 - [ ] Bumper Kirby à une version sans advisories de sécurité
-- [ ] Passer `'debug' => false` en config quand tout est stable
+- [ ] Passer `debug => false` en prod quand tout est stable
 
 ## Done
