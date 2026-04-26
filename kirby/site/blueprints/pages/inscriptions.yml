@@ -1,0 +1,40 @@
+title: Inscriptions reçues
+icon: users
+options:
+  changeSlug: false
+  changeStatus: false
+  changeTemplate: false
+  delete: false
+  preview: false
+
+sections:
+  actions:
+    type: info
+    label: Export
+    text: |
+      → [📥 Exporter toutes les inscriptions en Excel](/panel/plugins/enpleinproust/export-xlsx)
+  inscrits:
+    type: pages
+    label: Inscrit·es
+    template: inscription-entry
+    sortBy: dateInscription desc
+    layout: table
+    columns:
+      prenom:
+        label: Prénom
+        text: "{{ page.prenom }}"
+      nom:
+        label: Nom
+        text: "{{ page.nom }}"
+      email:
+        label: Email
+        text: "{{ page.email }}"
+      creneaux:
+        label: Créneaux
+        text: "{{ page.creneaux.split.count }}"
+      statut:
+        label: Statut
+        text: "{{ page.statut }}"
+      dateInscription:
+        label: Date
+        text: "{{ page.dateInscription.toDate('d/m/Y H:i') }}"

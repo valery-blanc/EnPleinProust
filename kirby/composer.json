@@ -1,0 +1,20 @@
+{
+    "name": "enpleinproust/site",
+    "description": "Site web En Plein Proust — performance collective de lecture en 24h",
+    "license": "proprietary",
+    "type": "project",
+    "require": {
+        "php": ">=8.1.0",
+        "getkirby/cms": "^4.4",
+        "phpoffice/phpspreadsheet": "^2.3"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "audit": {
+            "abandoned": "report"
+        },
+        "allow-plugins": {
+            "getkirby/composer-installer": true
+        }
+    }
+}

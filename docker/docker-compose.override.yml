@@ -1,0 +1,7 @@
+# Local dev override — exposes port 8080 directly on the host
+# In production (Avignon), this file is excluded by .dockerignore-like rsync
+# patterns or simply absent so the container stays on the `web` network only.
+services:
+  enpleinproust:
+    ports:
+      - "8080:80"

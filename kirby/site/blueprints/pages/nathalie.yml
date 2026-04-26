@@ -1,0 +1,26 @@
+title: Interview de l'organisatrice
+icon: video
+preset: page
+options:
+  changeSlug: false
+  changeStatus: false
+  delete: false
+
+fields:
+  videoUrl:
+    label: URL YouTube de l'interview
+    type: url
+    default: https://www.youtube.com/watch?v=FHZyMDgpc1g
+  bio:
+    label: Bio courte
+    type: textarea
+    size: medium
+  citation:
+    label: Citation phare
+    type: textarea
+    size: small
+    buttons: false
+  citationAuteur:
+    label: Auteur·ice de la citation
+    type: text
+    default: Nathalie Vanderlinden

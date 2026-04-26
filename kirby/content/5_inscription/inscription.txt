@@ -1,0 +1,31 @@
+Title: Inscription
+
+----
+
+Intro:
+
+Pour participer comme lecteurice à l'édition 2027 (*Albertine disparue*), inscrivez-vous ici. Les créneaux précis seront publiés dès qu'ils seront fixés ; en attendant, indiquez vos disponibilités.
+
+----
+
+Conditions: Le livre est divisé en sections d'environ 10 minutes de lecture. Chaque lecteurice assure 2 passages minimum, espacés d'au moins 45 minutes. Munissez-vous de la dernière édition Folio classique 2022 (édition révisée et augmentée).
+
+----
+
+Mincreneaux: 2
+
+----
+
+Maxcreneaux: 4
+
+----
+
+Creneauxlist:
+
+----
+
+Mercititre: Merci pour votre inscription
+
+----
+
+Mercitexte: Votre inscription a bien été reçue. Nathalie reviendra vers vous par email pour vous communiquer votre ordre de passage exact, dès que les créneaux précis de l'édition 2027 seront fixés.

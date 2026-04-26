@@ -1,0 +1,18 @@
+title: Photo
+accept:
+  mime:
+    - image/jpeg
+    - image/png
+    - image/webp
+  maxsize: 10485760
+
+fields:
+  alt:
+    label: Texte alternatif (accessibilité)
+    type: text
+  legende:
+    label: Légende
+    type: text
+  credit:
+    label: Crédit photo
+    type: text

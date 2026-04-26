@@ -1,0 +1,80 @@
+Title: 2022 — À l'ombre des jeunes filles en fleurs
+
+----
+
+Tomenumero: 2
+
+----
+
+Tometitre: À l'ombre des jeunes filles en fleurs
+
+----
+
+Titreedition: Désacraliser Proust
+
+----
+
+Datedebut: 2022-02-05
+
+----
+
+Datefin: 2022-02-06
+
+----
+
+Lieu: Ateliers Mommen
+
+----
+
+Adresse: 37 rue de la Charité, 1210 Saint-Josse-Ten-Noode, Bruxelles
+
+----
+
+Organisateurices: Nathalie Vanderlinden
+
+----
+
+Partenaires:
+
+----
+
+Description:
+
+Durant 24 heures, chaque personne avec son corps, sa personnalité, sa façon de se tenir, de se présenter, a incarné le texte de sa voix. Nous, spectateur·ices, car il n'y avait pas qu'à écouter, avions devant nous une individualité qui, avec son bagage culturel, tentait de restituer ce qu'elle avait devant les yeux.
+
+L'écriture proustienne se prête vraiment bien à la lecture à voix haute. Ses phrases longues se déroulent comme de longs parchemins, se déploient sur une page, ou plusieurs.
+
+----
+
+Temoignages:
+
+-
+  auteur: Nathalie Vanderlinden
+  date: 2022-02-17
+  texte: |
+    Cela n'est pas facile. Lire Proust n'est pas facile d'emblée mais une fois qu'on comprend son rythme, je dirai plutôt, une fois qu'on le ressent, le corps suit, se met au diapason. Il faut un peu de temps certes et de patience pour que le texte se donne, mais une fois qu'on tient ce rythme, tout semble plus facile. Et cela peut être très addictif !
+
+-
+  auteur: Dany
+  date: 2022-02-19
+  texte: |
+    Très sensible aux voix, au rythme, à la musicalité, j'ai été charmée par la variété des lectures, certains faisant entendre l'humour proustien, sa théâtralité grâce à la manière dont ils sculptaient et respiraient la phrase, d'autres au contraire s'effaçant davantage derrière le texte et laissant aux auditeurs la part belle pour déchiffrer le sens.
+
+    Je suis restée plus longtemps que prévu. Une douzaine d'heures ! Oui, une sorte d'addiction. Je voulais savoir quelle voix succéderait à quelle voix et ce que Proust allait nous dire.
+
+    Ce jour-là j'ai eu l'impression que nous formions une cordée bien soudée et que nous allions à l'assaut de l'Everest.
+
+----
+
+Videos:
+
+----
+
+Liens:
+
+-
+  titre: Article BX1 — "Un marathon de lecture pour désacraliser Marcel Proust"
+  url: https://bx1.be/categories/news/un-marathon-de-lecture-de-24-heures-pour-desacraliser-marcel-proust/
+-
+  titre: Article PointCulture
+  url: https://www.pointculture.be/magazine/articles/focus/desacraliser-proust-aux-ateliers-mommen-nathalie-vanderlinden/

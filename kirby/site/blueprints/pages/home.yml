@@ -1,0 +1,73 @@
+title: Accueil
+icon: home
+options:
+  changeSlug: false
+  changeStatus: false
+  changeTemplate: false
+  delete: false
+
+columns:
+  - width: 2/3
+    sections:
+      hero:
+        type: fields
+        label: En-tête
+        fields:
+          eyebrow:
+            label: Sur-titre (au-dessus du grand titre)
+            type: text
+            default: Lecture & écoute collective en 24h sans interruption
+          tomeNumero:
+            label: Numéro du tome
+            type: number
+            default: 6
+          tomeTitre:
+            label: Titre du tome
+            type: text
+            default: Albertine disparue
+          edition:
+            label: Année de l'édition à venir
+            type: number
+            default: 2027
+          dates:
+            label: Dates précises (optionnel, ex. "10 - 11 avril 2027")
+            type: text
+          ctaInscription:
+            label: Texte du bouton principal
+            type: text
+            default: S'inscrire comme lecteurice
+      manifeste:
+        type: fields
+        label: Manifeste / texte d'introduction
+        fields:
+          intro:
+            label: Texte du manifeste (markdown autorisé)
+            type: textarea
+            size: medium
+            buttons: false
+          signature:
+            label: Signature affichée sous le manifeste (laisser vide pour ne rien afficher)
+            type: text
+            default: Nathalie Vanderlinden
+
+  - width: 1/3
+    sections:
+      portrait:
+        type: files
+        label: Portrait de Proust (image héro à droite)
+        info: "{{ file.dimensions }}"
+        layout: cards
+        max: 1
+        template: photo
+        query: page.images
+        uploads:
+          template: photo
+      meta:
+        type: fields
+        label: Métadonnées
+        fields:
+          metaDescription:
+            label: Meta description (SEO)
+            type: textarea
+            size: small
+            buttons: false

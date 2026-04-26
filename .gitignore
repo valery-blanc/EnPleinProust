@@ -1,0 +1,61 @@
+# Composer / Kirby
+kirby/vendor/
+kirby/site/accounts/
+kirby/site/sessions/
+kirby/site/cache/
+kirby/storage/
+
+# Contenu utilisateur sensible (reste sur le serveur)
+kirby/content/inscriptions/*.txt
+kirby/content/inscriptions/_index/
+
+# Médias uploadés (gros fichiers, à backuper séparément)
+kirby/content/**/*.jpg
+kirby/content/**/*.jpeg
+kirby/content/**/*.png
+kirby/content/**/*.gif
+kirby/content/**/*.webp
+kirby/content/**/*.mp3
+kirby/content/**/*.mp4
+kirby/content/**/*.wav
+kirby/content/**/*.m4a
+kirby/content/**/*.pdf
+
+# Mais on garde les .txt (contenu textuel des pages/éditions)
+!kirby/content/**/*.txt
+
+# Docker / dev local
+.env
+.env.local
+docker/data/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*~
+
+# Images sources à la racine (fichiers de travail, pas du code)
+/*.jpg
+/*.jpeg
+/*.png
+/*.gif
+/*.webp
+
+# Briefs originaux (déjà dans le repo de spec, pas dans le code)
+24hdeproust.pdf
+EN PLEIN PROUST.pdf
+Psout flyer 2023- recto.doc
+RElire Proust - flyer verso 2023 (1).docx
+annonce_facebook_2026.txt
+flyer R (1).png
+flyer V (1).png
+flyer_2026_verso.jpg
+le-temps-retrouve-marcel-proust_.jpg
+sodome et gomorrhe.jpg
+temp.txt

@@ -1,0 +1,17 @@
+# Copier vers ~/docker/traefik/dynamic/enpleinproust.zitoon.com.yml
+# sur le serveur Avignon. Traefik recharge automatiquement.
+http:
+  routers:
+    enpleinproust:
+      rule: "Host(`enpleinproust.zitoon.com`)"
+      entryPoints:
+        - websecure
+      service: enpleinproust-svc
+      priority: 10
+      tls:
+        certResolver: letsencrypt
+  services:
+    enpleinproust-svc:
+      loadBalancer:
+        servers:
+          - url: "http://enpleinproust:80"

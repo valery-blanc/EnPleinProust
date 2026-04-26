@@ -1,0 +1,15 @@
+services:
+  enpleinproust:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: enpleinproust
+    restart: unless-stopped
+    volumes:
+      - ../kirby:/var/www/html
+    networks:
+      - web
+
+networks:
+  web:
+    external: true

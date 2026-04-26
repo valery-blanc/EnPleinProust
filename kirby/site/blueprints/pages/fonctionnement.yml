@@ -1,0 +1,23 @@
+title: Fonctionnement
+icon: book
+preset: page
+options:
+  changeSlug: false
+  changeStatus: false
+  delete: false
+
+fields:
+  intro:
+    label: Phrase d'introduction
+    type: textarea
+    size: small
+    buttons: false
+  blocks:
+    label: Contenu
+    type: blocks
+    fieldsets:
+      - heading
+      - text
+      - quote
+      - list
+      - image

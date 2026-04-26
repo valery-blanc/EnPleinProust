@@ -1,0 +1,21 @@
+title: Audio
+accept:
+  mime:
+    - audio/mpeg
+    - audio/mp3
+    - audio/wav
+    - audio/x-wav
+    - audio/m4a
+    - audio/x-m4a
+  maxsize: 104857600
+
+fields:
+  titre:
+    label: Titre de l'enregistrement
+    type: text
+  duree:
+    label: Durée (mm:ss)
+    type: text
+  date:
+    label: Date d'enregistrement
+    type: date

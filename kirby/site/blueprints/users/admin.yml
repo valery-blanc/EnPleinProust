@@ -1,0 +1,17 @@
+name: admin
+title: Administrateur·ice
+description: Accès complet au site (contenu + inscriptions)
+permissions: true
+
+columns:
+  - width: 1/2
+    sections:
+      info:
+        type: info
+        label: Bienvenue
+        text: |
+          En tant qu'administrateur·ice, vous pouvez :
+          - Modifier toutes les pages du site
+          - Ajouter et gérer les éditions précédentes
+          - Consulter et exporter les inscriptions
+          - Ajouter de nouvelles pages au site

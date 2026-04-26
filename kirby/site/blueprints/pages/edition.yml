@@ -1,0 +1,117 @@
+title: Édition
+icon: book
+
+columns:
+  - width: 2/3
+    sections:
+      meta:
+        type: fields
+        label: Identité de l'édition
+        fields:
+          tomeNumero:
+            label: Numéro du tome
+            type: number
+            min: 1
+            max: 7
+            required: true
+          tomeTitre:
+            label: Titre du tome
+            type: text
+            required: true
+            placeholder: ex. La Prisonnière
+          titreEdition:
+            label: Titre de l'édition (si différent)
+            type: text
+            placeholder: ex. Désacraliser Proust
+          dateDebut:
+            label: Date de début
+            type: date
+            time: true
+            required: true
+          dateFin:
+            label: Date de fin
+            type: date
+            time: true
+          lieu:
+            label: Lieu
+            type: text
+            default: Ateliers Mommen
+          adresse:
+            label: Adresse
+            type: text
+            default: 37 rue de la Charité, 1210 Saint-Josse-Ten-Noode, Bruxelles
+      contenu:
+        type: fields
+        label: Contenu
+        fields:
+          description:
+            label: Description / présentation
+            type: textarea
+          temoignages:
+            label: Témoignages
+            type: structure
+            fields:
+              auteur:
+                label: Auteur·ice
+                type: text
+              date:
+                label: Date du témoignage
+                type: date
+              texte:
+                label: Texte
+                type: textarea
+            tagsField: auteur
+          videos:
+            label: Vidéos
+            type: structure
+            fields:
+              titre:
+                label: Titre
+                type: text
+              url:
+                label: URL d'embed (YouTube, Vimeo)
+                type: url
+            tagsField: titre
+          liens:
+            label: Liens externes (presse, événement Facebook…)
+            type: structure
+            fields:
+              titre:
+                label: Titre du lien
+                type: text
+              url:
+                label: URL
+                type: url
+            tagsField: titre
+
+  - width: 1/3
+    sections:
+      couverture:
+        type: files
+        label: Couverture (image du tome)
+        max: 1
+        template: photo
+        layout: cards
+      organisateurices:
+        type: fields
+        fields:
+          organisateurices:
+            label: Organisateur·ices
+            type: tags
+            placeholder: Nathalie Vanderlinden, …
+      partenaires:
+        type: fields
+        fields:
+          partenaires:
+            label: Partenaires
+            type: tags
+            placeholder: Ateliers Mommen, Librairie Météores…
+      galerie:
+        type: files
+        label: Galerie photos
+        template: photo
+        layout: cards
+      audio:
+        type: files
+        label: Enregistrements audio
+        template: audio

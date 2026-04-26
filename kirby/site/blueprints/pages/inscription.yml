@@ -1,0 +1,75 @@
+title: Inscription
+icon: edit
+preset: page
+options:
+  changeSlug: false
+  changeStatus: false
+  delete: false
+
+columns:
+  - width: 2/3
+    sections:
+      intro:
+        type: fields
+        fields:
+          intro:
+            label: Texte d'introduction
+            type: textarea
+            size: medium
+          conditions:
+            label: Conditions / consignes
+            type: textarea
+            size: small
+      creneaux:
+        type: fields
+        label: Créneaux disponibles
+        fields:
+          minCreneaux:
+            label: Nombre minimum de créneaux
+            type: number
+            default: 2
+            min: 1
+            max: 6
+          maxCreneaux:
+            label: Nombre maximum de créneaux
+            type: number
+            default: 4
+            min: 1
+            max: 12
+          creneauxList:
+            label: Liste des créneaux proposés
+            type: structure
+            fields:
+              label:
+                label: Libellé affiché
+                type: text
+                placeholder: ex. Samedi 20h - 21h
+                required: true
+              jour:
+                label: Jour
+                type: select
+                options:
+                  samedi: Samedi
+                  dimanche: Dimanche
+              horaire:
+                label: Horaire (HH:MM)
+                type: time
+            tagsField: label
+
+  - width: 1/3
+    sections:
+      confirmation:
+        type: fields
+        label: Confirmation après envoi
+        fields:
+          merciTitre:
+            label: Titre du message de confirmation
+            type: text
+            default: Merci pour votre inscription
+          merciTexte:
+            label: Texte de confirmation
+            type: textarea
+            size: small
+            default: |
+              Votre inscription a bien été reçue. Nous vous recontacterons par
+              email pour confirmer votre ordre de passage.

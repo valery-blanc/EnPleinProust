@@ -1,0 +1,27 @@
+title: En Plein Proust
+
+options:
+  changeTitle: false
+
+columns:
+  - width: 2/3
+    sections:
+      pages:
+        type: pages
+        label: Pages du site
+        templates:
+          - home
+          - fonctionnement
+          - editions
+          - nathalie
+          - inscription
+          - inscriptions
+          - default
+
+  - width: 1/3
+    sections:
+      drafts:
+        type: pages
+        label: Brouillons
+        status: draft
+        layout: list

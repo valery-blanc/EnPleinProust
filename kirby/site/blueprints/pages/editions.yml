@@ -1,0 +1,28 @@
+title: Toutes les éditions
+icon: archive
+preset: pages
+options:
+  changeSlug: false
+  changeStatus: false
+  delete: false
+
+sections:
+  intro:
+    type: fields
+    fields:
+      intro:
+        label: Introduction
+        type: textarea
+        size: small
+        buttons: false
+  editions:
+    type: pages
+    label: Éditions
+    template: edition
+    sortBy: dateDebut desc
+    layout: cards
+    image:
+      query: page.couverture.toFile.first
+      cover: true
+      ratio: 3/4
+    info: "{{ page.tomeNumero }} · {{ page.titreEdition }}"

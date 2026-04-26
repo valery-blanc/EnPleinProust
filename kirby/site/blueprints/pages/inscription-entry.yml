@@ -1,0 +1,62 @@
+title: Inscription
+icon: user
+options:
+  changeSlug: false
+  changeStatus: false
+  changeTemplate: false
+  preview: false
+
+columns:
+  - width: 2/3
+    sections:
+      personne:
+        type: fields
+        label: Personne
+        fields:
+          prenom:
+            label: Prénom
+            type: text
+          nom:
+            label: Nom
+            type: text
+          email:
+            label: Email
+            type: email
+          telephone:
+            label: Téléphone
+            type: tel
+      preferences:
+        type: fields
+        label: Préférences
+        fields:
+          creneaux:
+            label: Créneaux choisis
+            type: tags
+            separator: ","
+          message:
+            label: Message libre
+            type: textarea
+            size: small
+
+  - width: 1/3
+    sections:
+      gestion:
+        type: fields
+        label: Gestion
+        fields:
+          statut:
+            label: Statut
+            type: select
+            default: en-attente
+            options:
+              en-attente: En attente
+              confirme: Confirmé
+              annule: Annulé
+          dateInscription:
+            label: Date d'inscription
+            type: text
+            disabled: true
+          consentementRgpd:
+            label: Consentement RGPD
+            type: toggle
+            disabled: true

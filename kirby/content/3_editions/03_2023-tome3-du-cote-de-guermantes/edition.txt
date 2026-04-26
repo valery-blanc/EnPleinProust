@@ -1,0 +1,71 @@
+Title: 2023 — Du côté de Guermantes
+
+----
+
+Tomenumero: 3
+
+----
+
+Tometitre: Du côté de Guermantes
+
+----
+
+Titreedition: Relire Proust
+
+----
+
+Datedebut: 2023-09-23
+
+----
+
+Datefin: 2023-09-24
+
+----
+
+Lieu: Ateliers Mommen
+
+----
+
+Adresse: 37 rue de la Charité, 1210 Saint-Josse-Ten-Noode, Bruxelles
+
+----
+
+Organisateurices: Nathalie Vanderlinden, Manon Blanc, Jean-Philippe Convert
+
+----
+
+Partenaires:
+
+----
+
+Description:
+
+Pour lire Proust il faut un peu de temps et de patience, pour que le texte délivre ses secrets. Les phrases se déroulent comme de longs parchemins, comme des pensées qui n'en finissent pas de pointer le lieu d'où elles viennent.
+
+Ce troisième tome de la Recherche clôture les années d'enfance du narrateur et s'aventure sur le terrain de la vie d'adulte. Il y a beaucoup d'humour dans ce volume.
+
+Le livre a été divisé en sections de 10 minutes de lecture. Chaque lecteurice assure au moins 2 passages.
+
+----
+
+Temoignages:
+
+-
+  auteur: Nathalie Vanderlinden
+  date: 2023-09-25
+  texte: |
+    Ces 26h40 ont été durant chaque minute, pour moi, des moments de réjouissance. Pouvoir écouter le livre en entier et ce, incarné par un chapelet d'individualités, matières de corps et d'esprit, matières sociales, culturelles et politiques — est pour moi un privilège que je souhaite à chacun·e.
+
+    La lecture à voix haute devant un public laisse place à la vulnérabilité du corps. Nous nous sommes vu·es et écouté·es.
+
+----
+
+Videos:
+
+----
+
+Liens:
+
+-
+  titre: Événement Facebook
+  url: https://facebook.com/events/s/relire-proust/305739268711926/
