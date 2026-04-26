@@ -7,6 +7,10 @@ services:
     restart: unless-stopped
     volumes:
       - ../kirby:/var/www/html
+      # Backup CSV hors container — survit à la destruction du container
+      - /home/val/data/enpleinproust:/data/inscriptions
+    env_file:
+      - ../.env
     networks:
       - web
 

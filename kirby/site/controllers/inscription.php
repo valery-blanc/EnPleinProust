@@ -33,7 +33,8 @@ return function ($kirby, $page, $site) {
 
     $min = $page->minCreneaux()->or(2)->toInt();
     $max = $page->maxCreneaux()->or(4)->toInt();
-    $hasStructuredCreneaux = $page->creneauxList()->toStructure()->count() > 0;
+    $creneauxStructure = $page->creneauxList()->toStructure();
+    $hasStructuredCreneaux = $creneauxStructure && $creneauxStructure->count() > 0;
 
     if ($hasStructuredCreneaux) {
         $count = count($data['creneaux']);
@@ -47,90 +48,134 @@ return function ($kirby, $page, $site) {
     }
 
     if ($errors !== []) {
-        return [
-            'alert' => implode(' ', $errors),
-            'data'  => $data,
-        ];
+        return ['alert' => implode(' ', $errors), 'data' => $data];
     }
 
     $parent = $kirby->page('inscriptions');
     if ($parent === null) {
         return [
-            'alert' => 'Erreur : page parente "inscriptions" manquante. Merci de prévenir l\'administrateur·ice.',
+            'alert' => 'Erreur : page "inscriptions" manquante. Merci de prévenir l\'administrateur·ice.',
             'data'  => $data,
         ];
     }
 
     $now = new DateTimeImmutable('now');
     $slug = $now->format('Ymd-His') . '-' . substr(preg_replace('/[^a-z0-9]/i', '', strtolower($data['prenom'] . $data['nom'])), 0, 16);
+    $creneauxLabel = $hasStructuredCreneaux ? implode(', ', $data['creneaux']) : $data['creneauxLibre'];
 
+    // 1 — Sauvegarder dans Kirby (sous-page de inscriptions/)
     try {
         $kirby->impersonate('kirby');
-
-        $newPage = $parent->createChild([
+        $kirby->page('inscriptions')->createChild([
             'slug'     => $slug,
             'template' => 'inscription-entry',
             'content'  => [
-                'title'           => $data['prenom'] . ' ' . $data['nom'],
-                'prenom'          => $data['prenom'],
-                'nom'             => $data['nom'],
-                'email'           => $data['email'],
-                'telephone'       => $data['telephone'],
-                'creneaux'        => $hasStructuredCreneaux
-                    ? implode(', ', $data['creneaux'])
-                    : $data['creneauxLibre'],
-                'message'         => $data['message'],
-                'statut'          => 'en-attente',
-                'dateInscription' => $now->format('c'),
+                'title'            => $data['prenom'] . ' ' . $data['nom'],
+                'prenom'           => $data['prenom'],
+                'nom'              => $data['nom'],
+                'email'            => $data['email'],
+                'telephone'        => $data['telephone'],
+                'creneaux'         => $creneauxLabel,
+                'message'          => $data['message'],
+                'statut'           => 'en-attente',
+                'dateInscription'  => $now->format('c'),
                 'consentementRgpd' => 'true',
             ],
         ]);
     } catch (\Throwable $e) {
-        return [
-            'alert' => 'Erreur lors de l\'enregistrement : ' . $e->getMessage(),
-            'data'  => $data,
-        ];
+        return ['alert' => 'Erreur lors de l\'enregistrement : ' . $e->getMessage(), 'data' => $data];
     }
 
-    // Notification email à l'organisatrice (best-effort, ne bloque pas en cas d'échec SMTP)
-    $notifyTo = $kirby->option('enpleinproust.notification.email', '24hdeproust@gmail.com');
-    $creneauxLabel = $hasStructuredCreneaux ? implode("\n  - ", $data['creneaux']) : $data['creneauxLibre'];
-
+    // 2 — Backup CSV hors container
+    $csvPath = $kirby->option('enpleinproust.csv.path', '/data/inscriptions/inscriptions.csv');
     try {
-        $kirby->email([
-            'to'      => $notifyTo,
-            'from'    => $notifyTo,
-            'replyTo' => $data['email'],
-            'subject' => '[En Plein Proust] Nouvelle inscription — ' . $data['prenom'] . ' ' . $data['nom'],
-            'body'    => "Nouvelle inscription :\n\n"
-                . "Nom : {$data['prenom']} {$data['nom']}\n"
-                . "Email : {$data['email']}\n"
-                . "Téléphone : " . ($data['telephone'] ?: '-') . "\n\n"
-                . "Créneaux préférés :\n  - {$creneauxLabel}\n\n"
-                . "Message :\n" . ($data['message'] ?: '(aucun)') . "\n\n"
-                . "→ Voir dans le panel : " . $kirby->url() . "/panel/pages/inscriptions+" . $slug,
-        ]);
+        $csvDir = dirname($csvPath);
+        if (!is_dir($csvDir)) {
+            mkdir($csvDir, 0755, true);
+        }
+        $isNew = !file_exists($csvPath);
+        $fh = fopen($csvPath, 'a');
+        if ($fh) {
+            if ($isNew) {
+                fputcsv($fh, ['date', 'prenom', 'nom', 'email', 'telephone', 'creneaux', 'message', 'statut'], ';');
+            }
+            fputcsv($fh, [
+                $now->format('d/m/Y H:i:s'),
+                $data['prenom'],
+                $data['nom'],
+                $data['email'],
+                $data['telephone'],
+                $creneauxLabel,
+                $data['message'],
+                'en-attente',
+            ], ';');
+            fclose($fh);
+        }
     } catch (\Throwable $e) {
-        // Email non envoyé : log mais continue
-        // (en dev, pas de SMTP configuré — c'est normal)
+        // CSV non écrit : on continue (la sous-page Kirby fait office de backup secondaire)
+        error_log('[EnPleinProust] CSV backup failed: ' . $e->getMessage());
     }
 
-    // Confirmation au lecteurice
+    // 3 — Email de confirmation à l'inscrit·e
+    $smtpFrom = $kirby->option('enpleinproust.smtp.from', '24hdeproust@gmail.com');
+
+    $tags = [
+        '#PRENOM'    => $data['prenom'],
+        '#NOM'       => $data['nom'],
+        '#EMAIL'     => $data['email'],
+        '#TELEPHONE' => $data['telephone'] ?: '-',
+        '#CRENEAUX'  => $creneauxLabel,
+        '#MESSAGE'   => $data['message'] ?: '-',
+    ];
+
+    $confirmSubject = (string)$site->emailConfirmationSujet()->or('Votre inscription à En Plein Proust est bien reçue');
+    $confirmBody    = (string)$site->emailConfirmationCorps();
+
+    if ($confirmBody === '') {
+        $confirmBody = "Bonjour #PRENOM,\n\nMerci pour votre inscription à En Plein Proust.\n\nCréneaux : #CRENEAUX\n\nÀ bientôt !\n\nL'équipe En Plein Proust";
+    }
+
+    $confirmBody = strtr($confirmBody, $tags);
+    $confirmSubject = strtr($confirmSubject, $tags);
+
     try {
         $kirby->email([
             'to'      => $data['email'],
-            'from'    => $notifyTo,
-            'replyTo' => $notifyTo,
-            'subject' => 'Votre inscription à En Plein Proust est bien reçue',
-            'body'    => "Bonjour {$data['prenom']},\n\n"
-                . "Merci pour votre inscription à En Plein Proust.\n\n"
-                . "Vos préférences de créneaux ont été enregistrées. Nathalie reviendra "
-                . "vers vous par email pour vous communiquer votre ordre de passage exact.\n\n"
-                . "À bientôt aux Ateliers Mommen !\n\n"
-                . "L'équipe En Plein Proust",
+            'from'    => $smtpFrom,
+            'replyTo' => $smtpFrom,
+            'subject' => $confirmSubject,
+            'body'    => $confirmBody,
         ]);
     } catch (\Throwable $e) {
-        // OK
+        error_log('[EnPleinProust] Confirmation email failed: ' . $e->getMessage());
+    }
+
+    // 4 — Email de notification aux organisateurices
+    $destinatairesRaw = (string)$site->emailDestinataires();
+    if ($destinatairesRaw !== '') {
+        $destinataires = array_filter(array_map('trim', explode(',', $destinatairesRaw)));
+        $notifBody = "Nouvelle inscription reçue :\n\n"
+            . "Prénom  : {$data['prenom']}\n"
+            . "Nom     : {$data['nom']}\n"
+            . "Email   : {$data['email']}\n"
+            . "Tél.    : " . ($data['telephone'] ?: '-') . "\n\n"
+            . "Créneaux :\n  " . str_replace(', ', "\n  ", $creneauxLabel) . "\n\n"
+            . "Message :\n" . ($data['message'] ?: '(aucun)') . "\n\n"
+            . "→ Panel : " . $kirby->url() . '/panel/pages/inscriptions+' . $slug;
+
+        foreach ($destinataires as $dest) {
+            try {
+                $kirby->email([
+                    'to'      => $dest,
+                    'from'    => $smtpFrom,
+                    'replyTo' => $data['email'],
+                    'subject' => '[En Plein Proust] Nouvelle inscription — ' . $data['prenom'] . ' ' . $data['nom'],
+                    'body'    => $notifBody,
+                ]);
+            } catch (\Throwable $e) {
+                error_log('[EnPleinProust] Notification email to ' . $dest . ' failed: ' . $e->getMessage());
+            }
+        }
     }
 
     return ['success' => true];

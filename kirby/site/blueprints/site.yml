@@ -3,25 +3,67 @@ title: En Plein Proust
 options:
   changeTitle: false
 
-columns:
-  - width: 2/3
-    sections:
-      pages:
-        type: pages
-        label: Pages du site
-        templates:
-          - home
-          - fonctionnement
-          - editions
-          - nathalie
-          - inscription
-          - inscriptions
-          - default
+tabs:
+  site:
+    label: Pages
+    icon: pages
+    columns:
+      - width: 2/3
+        sections:
+          pages:
+            type: pages
+            label: Pages du site
+            templates:
+              - home
+              - fonctionnement
+              - editions
+              - nathalie
+              - inscription
+              - inscriptions
+              - default
 
-  - width: 1/3
+      - width: 1/3
+        sections:
+          drafts:
+            type: pages
+            label: Brouillons
+            status: draft
+            layout: list
+
+  inscriptions:
+    label: Config inscriptions
+    icon: email
     sections:
-      drafts:
-        type: pages
-        label: Brouillons
-        status: draft
-        layout: list
+      emailConfig:
+        type: fields
+        label: Configuration emails
+        fields:
+          emailDestinataires:
+            label: Destinataires de la notification (séparés par des virgules)
+            type: text
+            placeholder: nathalie@example.com, organisateur@example.com
+            help: Ces adresses reçoivent un email à chaque nouvelle inscription.
+          emailConfirmationSujet:
+            label: Sujet de l'email de confirmation (envoyé à l'inscrit·e)
+            type: text
+            default: Votre inscription à En Plein Proust est bien reçue
+          emailConfirmationCorps:
+            label: Corps de l'email de confirmation
+            type: textarea
+            size: large
+            buttons: false
+            help: |
+              Tags disponibles : #PRENOM, #NOM, #EMAIL, #TELEPHONE, #CRENEAUX, #MESSAGE
+            default: |
+              Bonjour #PRENOM,
+
+              Merci pour votre inscription à En Plein Proust.
+
+              Vos préférences de créneaux ont été enregistrées :
+              #CRENEAUX
+
+              Nathalie reviendra vers vous par email pour vous communiquer votre ordre de passage exact.
+
+              À bientôt aux Ateliers Mommen !
+
+              L'équipe En Plein Proust

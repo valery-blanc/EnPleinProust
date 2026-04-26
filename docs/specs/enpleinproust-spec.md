@@ -1,6 +1,6 @@
 # En Plein Proust — Spécification
 
-**Version** : 0.5 (FEAT-004 — Itérations design : Chau Philomene One, portrait fixe, menu mobile, 7 éditions)
+**Version** : 0.6 (FEAT-005 — Inscription : email confirmation + notif admin + backup CSV)
 **Dernière mise à jour** : 2026-04-26
 **Statut** : LIVE en pré-production sur https://enpleinproust.zitoon.com — premier commit GitHub poussé
 
@@ -236,13 +236,18 @@ liens réseaux, adresse Ateliers Mommen, plan.
 
 ### 5.2 Gestion des inscriptions
 
-- Liste paginée de toutes les inscriptions reçues, triable par date / nom
-- Recherche / filtre (par édition, par créneau préféré, par statut)
-- Détail d'une inscription
-- **Export Excel (.xlsx)** de la liste filtrée
-- Marquage de statut (en attente / confirmé / annulé) — utile pour Nathalie
-- Optionnel : envoi d'email depuis l'admin (réponse type "voici votre ordre
-  de passage")
+- Liste paginée de toutes les inscriptions reçues (Panel, tri par date)
+- Détail d'une inscription avec marquage de statut (en attente / confirmé / annulé)
+- **Export CSV** (UTF-8 + BOM pour Excel) via `/panel/plugins/enpleinproust/export-csv`
+- **Backup CSV** automatique à chaque inscription dans `/home/val/data/enpleinproust/inscriptions.csv`
+  sur Avignon, **hors container** (volume Docker monté depuis l'hôte)
+- **Email de confirmation** à l'inscrit·e : sujet et corps paramétrables dans le
+  Panel (onglet "Config inscriptions" du site). Tags disponibles : `#PRENOM`,
+  `#NOM`, `#EMAIL`, `#TELEPHONE`, `#CRENEAUX`, `#MESSAGE`
+- **Email de notification** à une liste de destinataires configurable (séparés
+  par virgules) dans le même onglet Panel
+- **SMTP** : configuré via variables d'environnement dans `/home/val/docker/enpleinproust/.env`
+  (non versionné) : `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_FROM`
 
 ### 5.3 Gestion des médias
 

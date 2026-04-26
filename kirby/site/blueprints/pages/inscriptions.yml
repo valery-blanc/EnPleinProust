@@ -12,7 +12,7 @@ sections:
     type: info
     label: Export
     text: |
-      → [📥 Exporter toutes les inscriptions en Excel](/panel/plugins/enpleinproust/export-xlsx)
+      → [📥 Exporter toutes les inscriptions (CSV)](/panel/plugins/enpleinproust/export-csv)
   inscrits:
     type: pages
     label: Inscrit·es

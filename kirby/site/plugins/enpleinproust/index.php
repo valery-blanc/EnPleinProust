@@ -2,74 +2,66 @@
 
 use Kirby\Cms\App;
 use Kirby\Http\Response;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 App::plugin('enpleinproust/admin', [
     'areas' => [
         'enpleinproust' => function () {
             return [
                 'label' => 'En Plein Proust',
-                'icon' => 'download',
-                'menu' => false,
+                'icon'  => 'download',
+                'menu'  => false,
                 'views' => [
                     [
-                        'pattern' => 'plugins/enpleinproust/export-xlsx',
+                        'pattern' => 'plugins/enpleinproust/export-csv',
                         'action'  => function () {
                             $kirby = kirby();
                             if (!$kirby->user()) {
                                 return go('/panel/login');
                             }
 
-                            $parent = $kirby->page('inscriptions');
-                            $rows = [];
+                            $csvPath = $kirby->option('enpleinproust.csv.path', '/data/inscriptions/inscriptions.csv');
 
-                            if ($parent) {
-                                foreach ($parent->children()->sortBy('dateInscription', 'desc') as $i) {
-                                    $rows[] = [
-                                        'date'      => $i->dateInscription()->toDate('d/m/Y H:i'),
-                                        'prenom'    => $i->prenom()->value(),
-                                        'nom'       => $i->nom()->value(),
-                                        'email'     => $i->email()->value(),
-                                        'telephone' => $i->telephone()->value(),
-                                        'creneaux'  => $i->creneaux()->value(),
-                                        'message'   => $i->message()->value(),
-                                        'statut'    => $i->statut()->value(),
-                                    ];
+                            if (!file_exists($csvPath)) {
+                                // Générer un CSV depuis les sous-pages Kirby si le fichier n'existe pas encore
+                                $parent = $kirby->page('inscriptions');
+                                $rows   = [];
+
+                                if ($parent) {
+                                    foreach ($parent->children()->sortBy('dateInscription', 'desc') as $i) {
+                                        $rows[] = [
+                                            $i->dateInscription()->toDate('d/m/Y H:i'),
+                                            $i->prenom()->value(),
+                                            $i->nom()->value(),
+                                            $i->email()->value(),
+                                            $i->telephone()->value(),
+                                            $i->creneaux()->value(),
+                                            $i->message()->value(),
+                                            $i->statut()->value(),
+                                        ];
+                                    }
                                 }
-                            }
 
-                            $spreadsheet = new Spreadsheet();
-                            $sheet = $spreadsheet->getActiveSheet();
-                            $sheet->setTitle('Inscriptions');
-
-                            $headers = ['Date', 'Prénom', 'Nom', 'Email', 'Téléphone', 'Créneaux', 'Message', 'Statut'];
-                            foreach ($headers as $i => $h) {
-                                $sheet->setCellValueByColumnAndRow($i + 1, 1, $h);
-                                $sheet->getStyleByColumnAndRow($i + 1, 1)->getFont()->setBold(true);
-                            }
-
-                            foreach ($rows as $r => $row) {
-                                $col = 1;
-                                foreach ($row as $value) {
-                                    $sheet->setCellValueByColumnAndRow($col++, $r + 2, $value);
+                                ob_start();
+                                $fh = fopen('php://output', 'w');
+                                fputs($fh, "\xEF\xBB\xBF"); // BOM UTF-8 pour Excel
+                                fputcsv($fh, ['Date', 'Prénom', 'Nom', 'Email', 'Téléphone', 'Créneaux', 'Message', 'Statut'], ';');
+                                foreach ($rows as $row) {
+                                    fputcsv($fh, $row, ';');
                                 }
+                                fclose($fh);
+                                $body = ob_get_clean();
+                            } else {
+                                // Retourner le fichier CSV de backup avec BOM si absent
+                                $raw = file_get_contents($csvPath);
+                                // Ajouter BOM si absent (pour que Excel l'ouvre en UTF-8)
+                                $body = (substr($raw, 0, 3) !== "\xEF\xBB\xBF") ? "\xEF\xBB\xBF" . $raw : $raw;
                             }
 
-                            for ($c = 1; $c <= count($headers); $c++) {
-                                $sheet->getColumnDimensionByColumn($c)->setAutoSize(true);
-                            }
+                            $filename = 'inscriptions-enpleinproust-' . date('Ymd-His') . '.csv';
 
-                            $writer = new Xlsx($spreadsheet);
-                            ob_start();
-                            $writer->save('php://output');
-                            $body = ob_get_clean();
-
-                            $filename = 'inscriptions-enpleinproust-' . date('Ymd-His') . '.xlsx';
-
-                            return new Response($body, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 200, [
+                            return new Response($body, 'text/csv; charset=utf-8', 200, [
                                 'Content-Disposition' => 'attachment; filename="' . $filename . '"',
-                                'Cache-Control' => 'no-store',
+                                'Cache-Control'       => 'no-store',
                             ]);
                         }
                     ]

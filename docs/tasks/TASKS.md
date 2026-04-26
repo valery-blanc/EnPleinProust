@@ -70,6 +70,18 @@
 - [x] Bug `intl` date handler corrigé : `Y` était interprété en ICU week-year
       (2027-01-01 → 2026)
 
+### FEAT-005 — Inscription : email confirmation + notif admin + backup CSV
+- [x] Lire et valider la spec (temp.txt)
+- [x] Créer `docs/specs/FEAT-005-inscription-email-csv.md`
+- [x] Config SMTP dans `config.php` (env vars)
+- [x] Volume Docker hors-container dans `docker-compose.yml` → `/home/val/data/enpleinproust`
+- [x] Controller `inscription.php` : écriture CSV + emails avec tags #PRENOM etc.
+- [x] Blueprint `site.yml` : onglet "Config inscriptions" (template email + destinataires)
+- [x] Plugin export : retourner CSV (UTF-8 BOM pour Excel)
+- [x] Déployer sur Avignon + tester (HTTP 200, CSV créé)
+- [x] Mettre à jour `enpleinproust-spec.md`
+- [x] Commit + push
+
 ### Backlog
 - [ ] Upload du portrait définitif (le placeholder a été remplacé par Val)
 - [ ] Saisie des dates précises et titre de l'édition Tome 1 (2019)
