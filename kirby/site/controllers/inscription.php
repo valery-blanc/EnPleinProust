@@ -1,6 +1,11 @@
 <?php
 
 return function ($kirby, $page, $site) {
+    // Afficher la page de confirmation après redirect (pattern PRG)
+    if (get('ok') === '1') {
+        return ['success' => true];
+    }
+
     if ($kirby->request()->is('POST') === false) {
         return [];
     }
@@ -66,7 +71,7 @@ return function ($kirby, $page, $site) {
     // 1 — Sauvegarder dans Kirby (sous-page de inscriptions/)
     try {
         $kirby->impersonate('kirby');
-        $kirby->page('inscriptions')->createChild([
+        $entry = $kirby->page('inscriptions')->createChild([
             'slug'     => $slug,
             'template' => 'inscription-entry',
             'content'  => [
@@ -82,6 +87,8 @@ return function ($kirby, $page, $site) {
                 'consentementRgpd' => 'true',
             ],
         ]);
+        // Passer en unlisted pour qu'elles apparaissent dans le Panel
+        $entry->changeStatus('unlisted');
     } catch (\Throwable $e) {
         return ['alert' => 'Erreur lors de l\'enregistrement : ' . $e->getMessage(), 'data' => $data];
     }
@@ -178,5 +185,6 @@ return function ($kirby, $page, $site) {
         }
     }
 
-    return ['success' => true];
+    // Redirect PRG : évite la re-soumission sur F5
+    go($page->url() . '?ok=1');
 };
