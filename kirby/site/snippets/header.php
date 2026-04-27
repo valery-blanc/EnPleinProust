@@ -18,6 +18,13 @@ $pagePortrait = $page->isHomePage() ? null : (
 <title><?= $page->isHomePage() ? 'En Plein Proust' : $page->title() . ' — En Plein Proust' ?></title>
 <meta name="description" content="<?= $page->metaDescription()->or('Lecture & écoute collective en 24h sans interruption d\'À la recherche du temps perdu de Marcel Proust, aux Ateliers Mommen à Bruxelles.')->escape() ?>">
 
+<?php
+$faviconPath = kirby()->root('index') . '/assets/favicon.jpg';
+$faviconVer  = file_exists($faviconPath) ? filemtime($faviconPath) : '1';
+?>
+<link rel="icon" type="image/jpeg" href="<?= url('assets/favicon.jpg') ?>?v=<?= $faviconVer ?>">
+<link rel="apple-touch-icon" href="<?= url('assets/favicon.jpg') ?>?v=<?= $faviconVer ?>">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chau+Philomene+One&family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap">

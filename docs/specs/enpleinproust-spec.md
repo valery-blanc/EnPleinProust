@@ -1,7 +1,7 @@
 # En Plein Proust — Spécification
 
-**Version** : 0.6 (FEAT-005 — Inscription : email confirmation + notif admin + backup CSV)
-**Dernière mise à jour** : 2026-04-26
+**Version** : 0.7 (FEAT-007 — Favicon, fonctionnement éditable, footer éditable)
+**Dernière mise à jour** : 2026-04-27
 **Statut** : LIVE en pré-production sur https://enpleinproust.zitoon.com — premier commit GitHub poussé
 
 ---
@@ -155,19 +155,22 @@ Sections sous le pli :
 
 ### 4.2 Page fonctionnement — `/fonctionnement`
 
-Explique en quoi consiste la performance, basé sur les textes des éditions
-précédentes (cf. `RElire Proust - flyer verso 2023 (1).docx` et les textes
-extraits du PDF).
+Explique en quoi consiste la performance. **Entièrement éditable via le Panel
+Kirby** (FEAT-007) : le contenu est stocké dans un champ `blocks` (heading,
+text, quote, list, image) + un champ `intro` (phrase d'accroche).
 
-Sections :
-- L'origine du projet (2019, San Francisco — cf. lien missionlocal.org)
+Sections initiales pré-remplies :
 - Le principe : 24h sans interruption, lecture collective à voix haute,
   Ateliers Mommen
 - Le déroulé : sections de ~10 minutes, 2 passages minimum par lecteur,
   intervalle de 45 minutes minimum entre passages
 - L'édition à utiliser (Folio classique 2022 révisée et augmentée)
 - L'auberge espagnole / bar / espace douillet / la nuit
-- Témoignage / mot de Nathalie
+- Citation de Nathalie
+- Pourquoi le faire
+
+Si le champ `blocks` est vide (contenu effacé), le template affiche un texte
+de fallback hardcodé pour éviter une page blanche.
 
 ### 4.3 Pages éditions précédentes
 
@@ -262,6 +265,26 @@ liens réseaux, adresse Ateliers Mommen, plan.
 - Éditeur WYSIWYG ou champs structurés selon stack
 - Possibilité d'ajouter de nouvelles pages sans intervention dev (pour les
   besoins futurs : page presse, page partenaires, etc.)
+
+### 5.5 Favicon
+
+- Fichier : `kirby/assets/favicon.jpg` (portrait Proust 200×200, FEAT-007)
+- Déclaré dans `header.php` : `<link rel="icon" type="image/jpeg">` + `<link rel="apple-touch-icon">`
+- Versionné avec `filemtime()` (cache-bust automatique)
+
+### 5.6 Footer éditable (FEAT-007)
+
+L'onglet **"Pied de page"** dans le Panel (`site.yml`) expose :
+
+| Champ              | Type       | Fallback hardcodé si vide                              |
+| ------------------ | ---------- | ------------------------------------------------------ |
+| `footerAdresse`    | textarea   | Texte Ateliers Mommen (KirbyText / markdown supporté)  |
+| `footerEmail`      | text       | `24hdeproust@gmail.com`                                |
+| `footerPartenaires`| structure  | Commune de Saint-Josse, FWB, Francophonies, Météores   |
+| `footerTagline`    | text       | `Performance gratuite · auberge espagnole · espace douillet` |
+| `footerCopyright`  | text       | `En Plein Proust` (l'année est toujours auto via `date('Y')`) |
+
+En bas de footer, une ligne de crédit hardcodée : **"Site réalisé par www.zitoon.com"** (lien, style `.site-footer__credit` — 0.72rem, opacité 0.45).
 
 ### 5.5 Gestion des éditions
 
@@ -392,6 +415,7 @@ enpleinproust/
 │   ├── assets/                   # CSS/JS/fonts/img du thème
 │   │   ├── css/
 │   │   ├── js/
+│   │   ├── favicon.jpg           # portrait Proust 200×200 (FEAT-007)
 │   │   ├── fonts/                # polices identifiées depuis l'affiche
 │   │   └── img/
 │   └── kirby/                    # sources Kirby (vendored ou via composer)

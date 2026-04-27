@@ -30,6 +30,41 @@ tabs:
             status: draft
             layout: list
 
+  footer:
+    label: Pied de page
+    icon: text
+    sections:
+      footerFields:
+        type: fields
+        fields:
+          footerCopyright:
+            label: Mention copyright (après © et l'année)
+            type: text
+            placeholder: En Plein Proust
+            help: "Affiché comme « © 2027 [valeur] » en bas du footer."
+          footerAdresse:
+            label: Description et adresse (col. gauche)
+            type: textarea
+            size: small
+            buttons: false
+            help: "Affiché sous « En Plein Proust » dans le footer. Le **gras** et l'*italique* Markdown sont supportés."
+          footerEmail:
+            label: Email de contact
+            type: text
+            placeholder: 24hdeproust@gmail.com
+          footerPartenaires:
+            label: Partenaires (col. droite)
+            type: structure
+            fields:
+              nom:
+                label: Nom du partenaire
+                type: text
+            help: "Affiché dans la colonne « Avec le soutien de »"
+          footerTagline:
+            label: Accroche bas de page
+            type: text
+            placeholder: "Performance gratuite · auberge espagnole · espace douillet"
+
   inscriptions:
     label: Config inscriptions
     icon: email

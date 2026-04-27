@@ -95,6 +95,20 @@
 ### BUG-001 — Bouton bloqué + redirect confirmation (validé)
 ### FEAT-006 — Hook suppression CSV (validé)
 
+### FEAT-007 — Favicon, fonctionnement éditable, footer éditable
+- [x] Lire et valider la spec (temp.txt)
+- [x] Créer `docs/specs/FEAT-007-favicon-fonctionnement-footer.md`
+- [x] Copier `proust_200.jpg` → `kirby/assets/favicon.jpg`
+- [x] Ajouter `<link rel="icon">` dans `header.php`
+- [x] Pré-remplir `fonctionnement.txt` avec les blocs Kirby JSON
+- [x] Ajouter onglet "Pied de page" dans `site.yml`
+- [x] Mettre à jour `footer.php` pour lire les champs site
+- [x] Mettre à jour `enpleinproust-spec.md`
+- [x] v2 : champ `footerCopyright` + ligne crédit zitoon.com hardcodée
+- [x] v3 : crédit repositionné sous copyright, couleur --c-text-muted, 0.82rem
+- [x] Validé par Val
+- [x] Commit
+
 ## Backlog
 - [ ] Saisie des dates précises et titre de l'édition Tome 1 (2019)
 - [ ] Créneaux structurés sur `/inscription` quand l'agenda 2027 est fixé
